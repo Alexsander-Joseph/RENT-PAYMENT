@@ -1,0 +1,65 @@
+!DOCTYPE html>
+<html>
+<head>
+  <title>Rent System</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, button { width: 100%; margin: 5px 0; padding: 8px; }
+    table { width: 100%; margin-top: 15px; border-collapse: collapse; }
+    td, th { border: 1px solid #ddd; padding: 5px; text-align: center; }
+    button { background: green; color: white; border: none; }
+  </style>
+</head>
+<body>
+
+<h3>Rent System</h3>
+
+<input id="name" placeholder="Name">
+<input id="house" placeholder="House">
+<input id="amount" placeholder="Amount">
+<input id="month" placeholder="Month">
+
+<button onclick="add()">Save</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>House</th>
+      <th>Amount</th>
+      <th>Month</th>
+    </tr>
+  </thead>
+  <tbody id="list"></tbody>
+</table>
+
+<script>
+let data = JSON.parse(localStorage.getItem("rent")) || [];
+
+function add(){
+  let n = name.value, h = house.value, a = amount.value, m = month.value;
+
+  if(!n || !h || !a || !m) return alert("Fill all");
+
+  data.push({n,h,a,m});
+  localStorage.setItem("rent", JSON.stringify(data));
+
+  render();
+}
+
+function render(){
+  list.innerHTML = data.map(d =>
+    `<tr>
+      <td>${d.n}</td>
+      <td>${d.h}</td>
+      <td>${d.a}</td>
+      <td>${d.m}</td>
+    </tr>`
+  ).join("");
+}
+
+render();
+</script>
+
+</body>
+</html>
